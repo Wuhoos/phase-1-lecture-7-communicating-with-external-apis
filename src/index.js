@@ -32,3 +32,22 @@ function displayFoodDetails(food){
     const foodDescription = document.querySelector('#description-display')
     foodDescription.textContent = food.description
 }
+
+
+
+const totalCrytoList = document.querySelector('#cryptocurrency-list')
+fetch('https://api.coincap.io/v2/assets')
+.then(response => response.json())
+.then(crytoCurrency => {
+    const filteredCryto = crytoCurrency.data.filter(eachCryto => {
+        const rank = Number(eachCryto.rank)
+        return rank <= 10
+    })
+    
+
+    filteredCryto.forEach(cryto => {
+        const crytoList = document.createElement('li')
+        crytoList.textContent = `${cryto.rank}: ${cryto.name} (${cryto.symbol})`
+        totalCrytoList.appendChild(crytoList)
+    })
+})
